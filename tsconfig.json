@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2018",
+    "inlineSourceMap": true,
+    "outDir": "./built",
+    "lib": ["es2018"],
+    "types": ["node", "@wdio/sync", "@wdio/mocha-framework", "chai"]
+},
+"exclude": [
+    "./node_modules/"
+
+]
+}
