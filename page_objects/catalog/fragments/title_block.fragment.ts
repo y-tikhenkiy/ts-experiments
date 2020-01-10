@@ -4,8 +4,10 @@ class TitleBlockFragment{
     constructor()
     {
         this.root = $('h1.catalog-heading');
-        
-       
 
     }
+}
+
+export{
+    TitleBlockFragment
 }
