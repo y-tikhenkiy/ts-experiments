@@ -5,25 +5,42 @@ import { CatalogPage } from '../page_objects/catalog';
 
 describe('first suit', () => {
     before(function(){
-        browser.url('rozetka.com.ua');
+        browser.maximizeWindow();
     })
     
-    it('should go to rozetka web page', () => {
-        // browser.url('rozetka.com.ua');
+    it('should go to rozetka web page with samsung phones', () => {
+        
+        //object declaration
         let mainPage: MainPage = new MainPage();
         let catalogPage = new CatalogPage();
         
-        let searchValue = 'телефон samsung';
-        mainPage.searchItems(searchValue);
-        
-        // let catalogTitleSelector = 'h1.catalog-heading';
-        // let catalogTitle = $(catalogTitleSelector);
-                
-        // catalogTitle.waitForDisplayed(3*1000);
-        // let catalogTitleValue =catalogTitle.getText();
-
+        let searchValue = 'телефон samsung'; // declare variable with searching value 
+        browser.url('rozetka.com.ua'); // goto rozetka web page
+        mainPage.searchItems(searchValue); 
         let catalogTitleValue = catalogPage.getTitleBlockInfo();
 
         expect(catalogTitleValue.toLowerCase()).to.include('samsung');
     });
+
+    it('should check catalog search results  for existance samsung phones', ()=>{
+        browser.url('https://rozetka.com.ua/mobile-phones/c80003/producer=samsung/');
+
+        let catalogBlockRootSelector = '.content_type_catalog';
+        let catalogBlockRoot = $(catalogBlockRootSelector);
+
+        let catalogItemTitleSelector = '.goods-tile__title';
+        let catalogItemTitles = catalogBlockRoot.$$(catalogItemTitleSelector); 
+
+        catalogBlockRoot.waitForDisplayed(10*1000, false, 'Catalog root should be visible');
+        
+        let catalogItemValues = catalogItemTitles.map(function(titleItem){
+            return titleItem.getText();
+        })
+
+        catalogItemValues.forEach((titleValue)=>{
+            console.log(titleValue);
+            expect(titleValue.toLowerCase()).to.include('samsung');
+        })
+
+    })
 });
